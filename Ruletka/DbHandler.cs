@@ -17,7 +17,6 @@ namespace Ruletka
             this.connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["rouletteDb"].ConnectionString;
         }
 
-
         public DataTable GetUsersData()
         {
             // type of data table to store data 
@@ -56,6 +55,8 @@ namespace Ruletka
 
                 // adding parameters to the query
                 cmd.Parameters.AddWithValue("@username", username);
+
+                password = new PasswordHelper().HashPassword(password);
                 cmd.Parameters.AddWithValue("@password", password);
 
                 // opening connection
@@ -63,6 +64,27 @@ namespace Ruletka
                 // executing query
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        // returns Id of the user 
+        public int TryToLoginUser(string username, string password)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT id, password FROM users WHERE username = @username";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@username", username);
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    if (new PasswordHelper().VerifyPassword(password, reader["password"].ToString()))
+                    {
+                        return Convert.ToInt32(reader["id"]);
+                    }
+                }
+            }
+            return -1;
         }
 
 
@@ -155,6 +177,8 @@ namespace Ruletka
                 string query = "UPDATE users SET password = @newPassword WHERE id = @userId";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@userId", userId);
+
+                newPassword = new PasswordHelper().HashPassword(newPassword);
                 cmd.Parameters.AddWithValue("@newPassword", newPassword);
                 conn.Open();
                 cmd.ExecuteNonQuery();
