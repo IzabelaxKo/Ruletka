@@ -21,25 +21,26 @@ namespace Ruletka
 
             RoundedButton registerButton = new RoundedButton
             {
-                Text = "Kliknij mnie",
+                Text = "Zarejestruj",
                 Size = new Size(150, 50),
-                Location = new Point(380, 400),
+                Location = new Point(17, 10),
                 BackColor = Color.CornflowerBlue,
                 ForeColor = Color.White,
+                BorderRadius = 20,
             };
-            registerButton.Click += (sender, e) => Rejestrowanie(); // Dodanie zdarzenia kliknięcia
+            registerButton.Click += (sender, e) => Rejestrowanie();
             this.Controls.Add(registerButton);
 
             RoundedButton loginButton = new RoundedButton
             {
                 Text = "Zaloguj",
                 Size = new Size(150, 50),
-                Location = new Point(380, 300),
+                Location = new Point(17, 70),
                 BackColor = Color.CornflowerBlue,
                 ForeColor = Color.White,
-                BorderRadius = 10,
+                BorderRadius = 20,
             };
-            loginButton.Click += (sender, e) => Logowanie(); // Dodanie zdarzenia kliknięcia
+            loginButton.Click += (sender, e) => Logowanie();
             this.Controls.Add(loginButton);
         }
 
