@@ -13,11 +13,13 @@ namespace Ruletka
 {
     public partial class Main : Form
     {
-
+        private DbHandler dbHandler;
 
         public Main()
         {
             InitializeComponent();
+
+            dbHandler = new DbHandler();
 
             RoundedButton registerButton = new RoundedButton
             {
