@@ -16,21 +16,19 @@ namespace Ruletka
         {
             InitializeComponent();
 
-            RoundedButton registerButton = new RoundedButton
-            {
-                Text = "Zaloguj",
-                Size = new Size(150, 50),
-                Location = new Point(105, 120),
-                BackColor = Color.CornflowerBlue,
-                ForeColor = Color.White,
-                BorderRadius = 20,
-            };
-            registerButton.Click += (sender, e) => wysylanieDoBazy();
-            this.Controls.Add(registerButton);
         }    
         private void wysylanieDoBazy()
         {
+            Game game = new Game();
+            this.Hide();
+            game.ShowDialog();
+            this.Close();
             // Izabelka tutaj tez trzebawysłac do bazy
+        }
+
+        private void roundedButton1_Click(object sender, EventArgs e)
+        {
+            wysylanieDoBazy();
         }
     }
 

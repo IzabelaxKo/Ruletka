@@ -37,6 +37,7 @@
             this.nameError = new System.Windows.Forms.Label();
             this.PasswordError = new System.Windows.Forms.Label();
             this.RepeatPasswordError = new System.Windows.Forms.Label();
+            this.roundedButton1 = new RoundedButton();
             this.SuspendLayout();
             // 
             // label1
@@ -125,11 +126,25 @@
             this.RepeatPasswordError.TabIndex = 8;
             this.RepeatPasswordError.Text = "Powtórz hasło";
             // 
+            // roundedButton1
+            // 
+            this.roundedButton1.BorderRadius = 20;
+            this.roundedButton1.Location = new System.Drawing.Point(105, 190);
+            this.roundedButton1.Name = "roundedButton1";
+            this.roundedButton1.Size = new System.Drawing.Size(150, 50);
+            this.roundedButton1.TabIndex = 12;
+            this.roundedButton1.Text = "Zarejestruj";
+            this.roundedButton1.UseVisualStyleBackColor = true;
+            this.roundedButton1.Click += new System.EventHandler(this.roundedButton1_Click);
+            this.roundedButton1.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.roundedButton1.ForeColor = System.Drawing.Color.White;
+            // 
             // Register
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(364, 261);
+            this.Controls.Add(this.roundedButton1);
             this.Controls.Add(this.RepeatPasswordError);
             this.Controls.Add(this.PasswordError);
             this.Controls.Add(this.nameError);
@@ -157,5 +172,6 @@
         private System.Windows.Forms.Label nameError;
         private System.Windows.Forms.Label PasswordError;
         private System.Windows.Forms.Label RepeatPasswordError;
+        private RoundedButton roundedButton1;
     }
 }

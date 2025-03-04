@@ -32,6 +32,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.UserName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.roundedButton1 = new RoundedButton();
             this.SuspendLayout();
             // 
             // Pass
@@ -69,11 +70,25 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Nazwa użytkownika";
             // 
+            // roundedButton1
+            // 
+            this.roundedButton1.BorderRadius = 20;
+            this.roundedButton1.Location = new System.Drawing.Point(105, 120);
+            this.roundedButton1.Name = "roundedButton1";
+            this.roundedButton1.Size = new System.Drawing.Size(150, 50);
+            this.roundedButton1.TabIndex = 12;
+            this.roundedButton1.Text = "Zaloguj";
+            this.roundedButton1.UseVisualStyleBackColor = true;
+            this.roundedButton1.Click += new System.EventHandler(this.roundedButton1_Click);
+            this.roundedButton1.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.roundedButton1.ForeColor = System.Drawing.Color.White;
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(364, 190);
+            this.Controls.Add(this.roundedButton1);
             this.Controls.Add(this.Pass);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.UserName);
@@ -90,5 +105,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox UserName;
         private System.Windows.Forms.Label label1;
+        private RoundedButton roundedButton1;
     }
 }

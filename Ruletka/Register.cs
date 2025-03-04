@@ -24,17 +24,6 @@ namespace Ruletka
             PasswordError.Text = "";
             RepeatPasswordError.Text = "";
 
-            RoundedButton registerButton = new RoundedButton
-            {
-                Text = "Zarejestruj",
-                Size = new Size(150, 50),
-                Location = new Point(105, 190),
-                BackColor = Color.CornflowerBlue,
-                ForeColor = Color.White,
-                BorderRadius = 20,
-            };
-            registerButton.Click += (sender, e) => wyslanieDoBazy();
-            this.Controls.Add(registerButton);
         }
 
         private bool rejestracja()
@@ -126,5 +115,9 @@ namespace Ruletka
             return hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar && isValidLength;
         }
 
+        private void roundedButton1_Click(object sender, EventArgs e)
+        {
+            wyslanieDoBazy();
+        }
     }
 }
