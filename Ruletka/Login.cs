@@ -16,6 +16,7 @@ namespace Ruletka
         {
             InitializeComponent();
 
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
         }    
         private void wysylanieDoBazy()
         {
@@ -29,6 +30,14 @@ namespace Ruletka
         private void roundedButton1_Click(object sender, EventArgs e)
         {
             wysylanieDoBazy();
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            Register register = new Register();
+            this.Hide();
+            register.ShowDialog();
+            this.Close();
         }
     }
 
