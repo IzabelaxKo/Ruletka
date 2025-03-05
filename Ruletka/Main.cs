@@ -18,46 +18,30 @@ namespace Ruletka
         public Main()
         {
             InitializeComponent();
-
             dbHandler = new DbHandler();
-
-            RoundedButton registerButton = new RoundedButton
-            {
-                Text = "Kliknij mnie",
-                Size = new Size(150, 50),
-                Location = new Point(380, 400),
-                BackColor = Color.CornflowerBlue,
-                ForeColor = Color.White,
-            };
-            registerButton.Click += (sender, e) => Rejestrowanie(); // Dodanie zdarzenia kliknięcia
-            this.Controls.Add(registerButton);
-
-            RoundedButton loginButton = new RoundedButton
-            {
-                Text = "Zaloguj",
-                Size = new Size(150, 50),
-                Location = new Point(380, 300),
-                BackColor = Color.CornflowerBlue,
-                ForeColor = Color.White,
-                BorderRadius = 10,
-            };
-            loginButton.Click += (sender, e) => Logowanie(); // Dodanie zdarzenia kliknięcia
-            this.Controls.Add(loginButton);
         }
 
-        private void Logowanie()
+
+        private void roundedButton1_Click(object sender, EventArgs e)
         {
-            Login loginPage = new Login();
-            this.Hide();
-            loginPage.ShowDialog();
-            this.Close();
-        }
-        private void Rejestrowanie()
-        {
+            // rejestracja
+
             Register register = new Register();
             this.Hide();
             register.ShowDialog();
             this.Close();
         }
+
+        private void roundedButton2_Click(object sender, EventArgs e)
+        {
+            // logowanie
+
+            Login loginPage = new Login();
+            this.Hide();
+            loginPage.ShowDialog();
+            this.Close();
+        }
+
+
     }
 }
