@@ -20,6 +20,8 @@ namespace Ruletka
         {
             InitializeComponent();
 
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+
             nameError.Text = "";
             PasswordError.Text = "";
             RepeatPasswordError.Text = "";
@@ -118,6 +120,14 @@ namespace Ruletka
         private void roundedButton1_Click(object sender, EventArgs e)
         {
             wyslanieDoBazy();
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            this.Hide();
+            login.ShowDialog();
+            this.Close();
         }
     }
 }
