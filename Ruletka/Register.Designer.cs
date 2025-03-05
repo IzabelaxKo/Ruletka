@@ -38,6 +38,7 @@
             this.PasswordError = new System.Windows.Forms.Label();
             this.RepeatPasswordError = new System.Windows.Forms.Label();
             this.roundedButton1 = new RoundedButton();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -128,22 +129,37 @@
             // 
             // roundedButton1
             // 
+            this.roundedButton1.BackColor = System.Drawing.Color.CornflowerBlue;
             this.roundedButton1.BorderRadius = 20;
+            this.roundedButton1.ForeColor = System.Drawing.Color.White;
             this.roundedButton1.Location = new System.Drawing.Point(105, 190);
             this.roundedButton1.Name = "roundedButton1";
             this.roundedButton1.Size = new System.Drawing.Size(150, 50);
             this.roundedButton1.TabIndex = 12;
             this.roundedButton1.Text = "Zarejestruj";
-            this.roundedButton1.UseVisualStyleBackColor = true;
+            this.roundedButton1.UseVisualStyleBackColor = false;
             this.roundedButton1.Click += new System.EventHandler(this.roundedButton1_Click);
-            this.roundedButton1.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.roundedButton1.ForeColor = System.Drawing.Color.White;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label4.Location = new System.Drawing.Point(97, 243);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(164, 15);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Nie masz konta? Zarejestruj sie teraz.";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // Register
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(364, 261);
+            this.ClientSize = new System.Drawing.Size(364, 266);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.roundedButton1);
             this.Controls.Add(this.RepeatPasswordError);
             this.Controls.Add(this.PasswordError);
@@ -155,6 +171,8 @@
             this.Controls.Add(this.UserName);
             this.Controls.Add(this.label1);
             this.Name = "Register";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Register";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -173,5 +191,6 @@
         private System.Windows.Forms.Label PasswordError;
         private System.Windows.Forms.Label RepeatPasswordError;
         private RoundedButton roundedButton1;
+        private System.Windows.Forms.Label label4;
     }
 }

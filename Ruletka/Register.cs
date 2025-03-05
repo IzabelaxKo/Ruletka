@@ -15,10 +15,15 @@ namespace Ruletka
         private string name;
         private string password;
         private string repeatPassword;
+        DbHandler dbHandler;
 
         public Register()
         {
             InitializeComponent();
+
+            dbHandler = new DbHandler();
+
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
             nameError.Text = "";
             PasswordError.Text = "";
@@ -83,10 +88,8 @@ namespace Ruletka
         {
             if (rejestracja())
             {
-
-
-                // Izunia tu dodaj kod do wysyłania danych do bazy danych
-
+                
+                dbHandler.AddUser(name, password);
 
                 MessageBox.Show("Rejestracja przebiegła pomyślnie");
 
@@ -118,6 +121,14 @@ namespace Ruletka
         private void roundedButton1_Click(object sender, EventArgs e)
         {
             wyslanieDoBazy();
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            this.Hide();
+            login.ShowDialog();
+            this.Close();
         }
     }
 }

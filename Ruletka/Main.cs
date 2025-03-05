@@ -18,6 +18,8 @@ namespace Ruletka
         public Main()
         {
             InitializeComponent();
+        
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             dbHandler = new DbHandler();
         }
 

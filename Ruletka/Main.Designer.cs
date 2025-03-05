@@ -66,6 +66,8 @@
             this.Controls.Add(this.roundedButton2);
             this.Controls.Add(this.roundedButton1);
             this.Name = "Main";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Main";
             this.ResumeLayout(false);
 
