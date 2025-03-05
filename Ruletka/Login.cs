@@ -15,6 +15,22 @@ namespace Ruletka
         public Login()
         {
             InitializeComponent();
+
+        }    
+        private void wysylanieDoBazy()
+        {
+            Game game = new Game();
+            this.Hide();
+            game.ShowDialog();
+            this.Close();
+            // Izabelka tutaj tez trzebawysłac do bazy
+        }
+
+        private void roundedButton1_Click(object sender, EventArgs e)
+        {
+            wysylanieDoBazy();
         }
     }
+
+
 }
