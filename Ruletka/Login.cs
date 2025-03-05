@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,19 +13,38 @@ namespace Ruletka
 {
     public partial class Login : Form
     {
+        DbHandler dbHandler;
+        private string username;
+        private string password;
+
+
         public Login()
         {
             InitializeComponent();
 
+            dbHandler = new DbHandler();
+
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
-        }    
+        }
         private void wysylanieDoBazy()
         {
-            Game game = new Game();
-            this.Hide();
-            game.ShowDialog();
-            this.Close();
-            // Izabelka tutaj tez trzebawysłac do bazy
+            username = UserName.Text;
+            password = Pass.Text;
+
+            int loggedInUser = dbHandler.TryToLoginUser(username, password);
+
+            if (loggedInUser >= 0)
+            {
+                // tutaj musi być przekazenie id zalogowanego użytkownika gdzieś
+                Game game = new Game();
+                this.Hide();
+                game.ShowDialog();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Niepoprawne dane logowania");
+            }
         }
 
         private void roundedButton1_Click(object sender, EventArgs e)
