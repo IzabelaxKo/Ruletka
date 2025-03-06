@@ -233,7 +233,9 @@ namespace Ruletka
 
         private async void spinBtn_Click(object sender, EventArgs e)
         {
-            await gameStartAsync();
+            //await gameStartAsync();
+            setImages();
+            checkWin();
         }
     }
 }
