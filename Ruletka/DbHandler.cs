@@ -131,12 +131,17 @@ namespace Ruletka
 
         }
 
-        public void UpdateBalance(int userId, int amount)
+        public void UpdateBalance(int userId, double amount, char operation)
         {
             // if amount is negative - it just subtracts from the balance
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                string query = "UPDATE users SET balance = balance + @amount WHERE id = @userId";
+                string query;
+                if (operation == '+')
+                    query = "UPDATE users SET balance = balance + @amount WHERE id = @userId";
+                else if(operation == '-')
+                    query = "UPDATE users SET balance = balance - @amount WHERE id = @userId";
+                else return;
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@userId", userId);
                 cmd.Parameters.AddWithValue("@amount", amount);
@@ -183,6 +188,23 @@ namespace Ruletka
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        public double GetBalance(int userId)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT balance FROM users WHERE id = @userId";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    return Convert.ToDouble(reader["balance"]);
+                }
+            }
+            return -1;
         }
 
     }
