@@ -40,11 +40,14 @@ namespace Ruletka
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
-            this.logoutBtn = new RoundedButton();
-            this.spinBtn = new RoundedButton();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.bidError = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.pictureBox11 = new System.Windows.Forms.PictureBox();
+            this.logoutBtn = new RoundedButton();
+            this.spinBtn = new RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
@@ -56,6 +59,7 @@ namespace Ruletka
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer2
@@ -146,33 +150,6 @@ namespace Ruletka
             this.pictureBox7.TabIndex = 7;
             this.pictureBox7.TabStop = false;
             // 
-            // logoutBtn
-            // 
-            this.logoutBtn.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.logoutBtn.BorderRadius = 20;
-            this.logoutBtn.ForeColor = System.Drawing.Color.White;
-            this.logoutBtn.Location = new System.Drawing.Point(1132, 629);
-            this.logoutBtn.Name = "logoutBtn";
-            this.logoutBtn.Size = new System.Drawing.Size(120, 40);
-            this.logoutBtn.TabIndex = 4;
-            this.logoutBtn.Text = "Wyloguj się";
-            this.logoutBtn.UseVisualStyleBackColor = false;
-            this.logoutBtn.Click += new System.EventHandler(this.logoutBtn_Click);
-            // 
-            // spinBtn
-            // 
-            this.spinBtn.BackColor = System.Drawing.Color.Gold;
-            this.spinBtn.BorderRadius = 20;
-            this.spinBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.spinBtn.ForeColor = System.Drawing.Color.Black;
-            this.spinBtn.Location = new System.Drawing.Point(555, 619);
-            this.spinBtn.Name = "spinBtn";
-            this.spinBtn.Size = new System.Drawing.Size(150, 50);
-            this.spinBtn.TabIndex = 3;
-            this.spinBtn.Text = "Losuj";
-            this.spinBtn.UseVisualStyleBackColor = false;
-            this.spinBtn.Click += new System.EventHandler(this.spinBtn_Click);
-            // 
             // textBox1
             // 
             this.textBox1.BackColor = System.Drawing.SystemColors.InactiveBorder;
@@ -200,20 +177,76 @@ namespace Ruletka
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.label1.Location = new System.Drawing.Point(435, 23);
+            this.label1.Location = new System.Drawing.Point(399, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(114, 41);
+            this.label1.Size = new System.Drawing.Size(462, 60);
             this.label1.TabIndex = 16;
             this.label1.Text = "label1";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label3
+            // 
+            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label3.Location = new System.Drawing.Point(12, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(228, 61);
+            this.label3.TabIndex = 19;
+            // 
+            // label4
+            // 
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(76, 17);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(154, 45);
+            this.label4.TabIndex = 20;
+            this.label4.Text = "label4";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pictureBox11
+            // 
+            this.pictureBox11.Image = global::Ruletka.Properties.Resources.User_icon_2_svg;
+            this.pictureBox11.Location = new System.Drawing.Point(17, 17);
+            this.pictureBox11.Name = "pictureBox11";
+            this.pictureBox11.Size = new System.Drawing.Size(53, 45);
+            this.pictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox11.TabIndex = 21;
+            this.pictureBox11.TabStop = false;
+            // 
+            // logoutBtn
+            // 
+            this.logoutBtn.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.logoutBtn.BorderRadius = 20;
+            this.logoutBtn.ForeColor = System.Drawing.Color.White;
+            this.logoutBtn.Location = new System.Drawing.Point(1132, 629);
+            this.logoutBtn.Name = "logoutBtn";
+            this.logoutBtn.Size = new System.Drawing.Size(120, 40);
+            this.logoutBtn.TabIndex = 4;
+            this.logoutBtn.Text = "Wyloguj się";
+            this.logoutBtn.UseVisualStyleBackColor = false;
+            this.logoutBtn.Click += new System.EventHandler(this.logoutBtn_Click);
+            // 
+            // spinBtn
+            // 
+            this.spinBtn.BackColor = System.Drawing.Color.Gold;
+            this.spinBtn.BorderRadius = 20;
+            this.spinBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.spinBtn.ForeColor = System.Drawing.Color.Black;
+            this.spinBtn.Location = new System.Drawing.Point(555, 619);
+            this.spinBtn.Name = "spinBtn";
+            this.spinBtn.Size = new System.Drawing.Size(150, 50);
+            this.spinBtn.TabIndex = 3;
+            this.spinBtn.Text = "Losuj";
+            this.spinBtn.UseVisualStyleBackColor = false;
+            this.spinBtn.Click += new System.EventHandler(this.spinBtn_Click);
             // 
             // Game
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.pictureBox11);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.bidError);
             this.Controls.Add(this.textBox1);
@@ -232,6 +265,7 @@ namespace Ruletka
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Game";
+            this.Load += new System.EventHandler(this.Game_Load);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
@@ -243,6 +277,7 @@ namespace Ruletka
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -264,5 +299,8 @@ namespace Ruletka
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label bidError;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.PictureBox pictureBox11;
     }
 }
