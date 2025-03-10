@@ -151,7 +151,7 @@ namespace Ruletka
             if (totalWin > 0)
             {
                 dbHandler.UpdateGames("wins", loggedInUser);
-                PlayWinSound();
+                //PlayWinSound();
                 balance += totalWin;
                 dbHandler.UpdateBalance(loggedInUser, totalWin, '+');
                 label1.Text = "Saldo: " + balance.ToString("F2") + " PLN";
@@ -270,7 +270,7 @@ namespace Ruletka
             for (int i = 0; i < spins; i++)
             {
                 spin();
-                simpleSound.Play();
+                //simpleSound.Play();
                 await Task.Delay(200);
             }
 
