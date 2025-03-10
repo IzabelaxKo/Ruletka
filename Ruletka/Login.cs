@@ -25,6 +25,8 @@ namespace Ruletka
             dbHandler = new DbHandler();
 
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
+
+            nameError.Text = "";
         }
         private void wysylanieDoBazy()
         {
@@ -36,20 +38,29 @@ namespace Ruletka
             if (loggedInUser >= 0)
             {
                 // tutaj musi być przekazenie id zalogowanego użytkownika gdzieś
-                Game game = new Game();
+                Game game = new Game(loggedInUser);
                 this.Hide();
                 game.ShowDialog();
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Niepoprawne dane logowania");
+                nameError.Text = "Niepoprawne dane logowania";
             }
         }
 
         private void roundedButton1_Click(object sender, EventArgs e)
         {
             wysylanieDoBazy();
+        }
+
+        private void Pass_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                roundedButton1.PerformClick();
+                e.SuppressKeyPress = true; // Prevents the 'ding' sound on Enter key press
+            }
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -60,6 +71,4 @@ namespace Ruletka
             this.Close();
         }
     }
-
-
 }

@@ -149,9 +149,9 @@
             this.label4.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label4.Location = new System.Drawing.Point(97, 243);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(164, 15);
+            this.label4.Size = new System.Drawing.Size(149, 15);
             this.label4.TabIndex = 14;
-            this.label4.Text = "Nie masz konta? Zarejestruj sie teraz.";
+            this.label4.Text = "Masz już konto? Zaloguj się teraz!";
             this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // Register
