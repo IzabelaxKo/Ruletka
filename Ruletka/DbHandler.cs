@@ -61,12 +61,12 @@ namespace Ruletka
             return false;
         }
 
-        public void AddUser(string username, string password)
+        public bool AddUser(string username, string password)
         {
             if(CheckIfUserExists(username))
             {
                 MessageBox.Show("Użytkownik o podanej nazwie już istnieje!");
-                return;
+                return false;
             }
             // connecting to the database
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -86,8 +86,44 @@ namespace Ruletka
                 conn.Open();
                 // executing query
                 cmd.ExecuteNonQuery();
+                return true;
             }
         }
+        public void DisplayWinRatio(string username, Label label)
+        {
+            double winRatio = 0;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+
+                string query = "SELECT wins, loses FROM users WHERE username = @username";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@username", username);
+
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        int wins = reader.GetInt32("wins");
+                        int loses = reader.GetInt32("loses");
+
+                        if (loses == 0)
+                        {
+                            winRatio = (wins > 0) ? 1.0 : 0.0;
+                        }
+                        else
+                        {
+                            winRatio = (double)wins / (wins + loses);
+                        }
+                    }
+                }
+            }
+
+            label.Text = $"procent wygranych: {winRatio * 100:0.00}%";
+        }
+
+
 
         // returns Id of the user 
         public int TryToLoginUser(string username, string password)

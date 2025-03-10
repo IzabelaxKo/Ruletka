@@ -13,7 +13,7 @@ namespace Ruletka
     public partial class Game : Form
     {
         private DbHandler dbHandler = new DbHandler();
-        private string[] images = { "bar", "bell", "cherry", "lemon", "orange", "plum", "seven", "diamond" };
+        private string[] images = { "bar", "bell", "cherry", "lemon", "seven", "diamond" };
         private Random random = new Random();
         private double bid;
         private int loggedInUser;
@@ -23,6 +23,7 @@ namespace Ruletka
         {
             InitializeComponent();
             setImages();
+            setLeaderboard();
 
             bidError.Text = "";
 
@@ -31,15 +32,32 @@ namespace Ruletka
             balance = dbHandler.GetBalance(loggedInUser);
             label1.Text = "Saldo: " + balance.ToString("F2") + " PLN";
             label4.Text =  dbHandler.GetUsername(loggedInUser);
+           dbHandler.DisplayWinRatio(dbHandler.GetUsername(loggedInUser), winRatio);
         }
-
-
-        // Uzupelnianie najlepszych osob od balansu
 
         private void setLeaderboard()
         {
             DataTable table = dbHandler.BalanceScoreboard();
+
+            topka.Text = "";
+
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                DataRow row = table.Rows[i];
+
+                // Assuming 'nazwa' is in the first column and 'balans' is in the second column.
+                string name = row[0].ToString();  // Adjust the index if necessary
+                string balance = row[1].ToString();  // Adjust the index if necessary
+
+                // Format the leaderboard entry
+                string leaderboardEntry = $"{name}, Balans: {balance} zł";
+
+                // Append the entry to the TextBox, add a new line after each entry
+                topka.Text += leaderboardEntry + Environment.NewLine;
+            }
         }
+
+
 
         // Ustawienie początkowych obrazów w PictureBox
         private void setImages()
@@ -271,20 +289,26 @@ namespace Ruletka
             }
 
             SoundPlayer simpleSound = new SoundPlayer(Path.Combine("sounds", "tick.wav"));
-            int spins = random.Next(6, 17);
+            int spins = random.Next(6, 15);
 
             balance -= bid;
+
             dbHandler.UpdateBalance(loggedInUser, bid, '-');
             label1.Text = "Saldo: " + balance.ToString("F2") + " PLN";
+            setLeaderboard();
+
 
             for (int i = 0; i < spins; i++)
             {
-                spin();
                 simpleSound.Play();
+                spin();
                 await Task.Delay(200);
             }
 
             checkWin(bid);
+            setLeaderboard();
+            dbHandler.DisplayWinRatio(dbHandler.GetUsername(loggedInUser), winRatio);
+
         }
 
         private void logoutBtn_Click(object sender, EventArgs e)

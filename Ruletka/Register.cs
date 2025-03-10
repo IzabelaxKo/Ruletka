@@ -89,14 +89,18 @@ namespace Ruletka
             if (rejestracja())
             {
                 
-                dbHandler.AddUser(name, password);
+                bool isNewUser = dbHandler.AddUser(name, password);
 
-                MessageBox.Show("Rejestracja przebiegła pomyślnie");
+                if (isNewUser) 
+                {
+                    MessageBox.Show("Rejestracja przebiegła pomyślnie!");
+                    Login login = new Login();
+                    this.Hide();
+                    login.ShowDialog();
+                    this.Close();
+                
+                }
 
-                Login login = new Login();
-                this.Hide();
-                login.ShowDialog();
-                this.Close();
             }
         }
 

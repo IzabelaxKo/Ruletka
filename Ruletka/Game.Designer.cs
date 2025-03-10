@@ -30,6 +30,7 @@ namespace Ruletka
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
             this.pictureBox9 = new System.Windows.Forms.PictureBox();
@@ -46,10 +47,12 @@ namespace Ruletka
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
+            this.topka = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.winRatio = new System.Windows.Forms.Label();
             this.logoutBtn = new RoundedButton();
             this.spinBtn = new RoundedButton();
-            this.Topka = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
@@ -215,6 +218,41 @@ namespace Ruletka
             this.pictureBox11.TabIndex = 21;
             this.pictureBox11.TabStop = false;
             // 
+            // topka
+            // 
+            this.topka.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.topka.CausesValidation = false;
+            this.topka.Enabled = false;
+            this.topka.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.topka.Location = new System.Drawing.Point(17, 95);
+            this.topka.Multiline = true;
+            this.topka.Name = "topka";
+            this.topka.ReadOnly = true;
+            this.topka.Size = new System.Drawing.Size(300, 484);
+            this.topka.TabIndex = 22;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(952, 129);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(300, 450);
+            this.textBox2.TabIndex = 23;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // winRatio
+            // 
+            this.winRatio.Location = new System.Drawing.Point(952, 80);
+            this.winRatio.Name = "winRatio";
+            this.winRatio.Size = new System.Drawing.Size(300, 46);
+            this.winRatio.TabIndex = 26;
+            this.winRatio.Text = "label2";
+            this.winRatio.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // logoutBtn
             // 
             this.logoutBtn.BackColor = System.Drawing.Color.CornflowerBlue;
@@ -242,28 +280,13 @@ namespace Ruletka
             this.spinBtn.UseVisualStyleBackColor = false;
             this.spinBtn.Click += new System.EventHandler(this.spinBtn_Click);
             // 
-            // Topka
-            // 
-            this.Topka.Location = new System.Drawing.Point(17, 95);
-            this.Topka.Multiline = true;
-            this.Topka.Name = "Topka";
-            this.Topka.Size = new System.Drawing.Size(300, 484);
-            this.Topka.TabIndex = 22;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(952, 95);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(300, 484);
-            this.textBox2.TabIndex = 23;
-            // 
             // Game
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.winRatio);
             this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.Topka);
+            this.Controls.Add(this.topka);
             this.Controls.Add(this.pictureBox11);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -281,6 +304,7 @@ namespace Ruletka
             this.Controls.Add(this.pictureBox8);
             this.Controls.Add(this.pictureBox6);
             this.Controls.Add(this.pictureBox9);
+            this.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.Name = "Game";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -321,7 +345,9 @@ namespace Ruletka
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox pictureBox11;
-        private System.Windows.Forms.TextBox Topka;
+        private System.Windows.Forms.TextBox topka;
         private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Label winRatio;
     }
 }
