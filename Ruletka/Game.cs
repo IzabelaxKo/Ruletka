@@ -13,7 +13,7 @@ namespace Ruletka
     public partial class Game : Form
     {
         private DbHandler dbHandler = new DbHandler();
-        private string[] images = { "bar", "bell", "cherry", "lemon", "seven", "diamond" };
+        private string[] images = { "bar", "bell", "cherry", "lemon", "orange", "plum", "seven", "diamond" };
         private Random random = new Random();
         private double bid;
         private int loggedInUser;
