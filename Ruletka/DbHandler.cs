@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using MySql.Data.MySqlClient;
+using System.Windows.Forms;
 
 namespace Ruletka
 {
@@ -43,11 +44,33 @@ namespace Ruletka
             return dt;
         }
 
-        public void AddUser(string username, string password)
+        public bool CheckIfUserExists(string username)
         {
-            // connecting to the database
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
+                string query = "SELECT * FROM users WHERE username = @username";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@username", username);
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void AddUser(string username, string password)
+        {
+            if(CheckIfUserExists(username))
+            {
+                MessageBox.Show("Użytkownik o podanej nazwie już istnieje!");
+                return;
+            }
+            // connecting to the database
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            { 
                 // query to insert data
                 string query = "INSERT INTO users (username, password) VALUES (@username, @password)";
                 // creating command object to perform query
