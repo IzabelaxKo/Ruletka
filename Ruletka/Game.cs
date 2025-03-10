@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
 using System.Linq;
+using System.Data;
 
 namespace Ruletka
 {
@@ -30,6 +31,14 @@ namespace Ruletka
             balance = dbHandler.GetBalance(loggedInUser);
             label1.Text = "Saldo: " + balance.ToString("F2") + " PLN";
             label4.Text =  dbHandler.GetUsername(loggedInUser);
+        }
+
+
+        // Uzupelnianie najlepszych osob od balansu
+
+        private void setLeaderboard()
+        {
+            DataTable table = dbHandler.BalanceScoreboard();
         }
 
         // Ustawienie początkowych obrazów w PictureBox
@@ -271,7 +280,7 @@ namespace Ruletka
             for (int i = 0; i < spins; i++)
             {
                 spin();
-                //simpleSound.Play();
+                simpleSound.Play();
                 await Task.Delay(200);
             }
 
@@ -329,11 +338,6 @@ namespace Ruletka
             {
                 e.Handled = true;
             }
-        }
-
-        private void Game_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

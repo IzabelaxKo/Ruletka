@@ -48,6 +48,8 @@ namespace Ruletka
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
             this.logoutBtn = new RoundedButton();
             this.spinBtn = new RoundedButton();
+            this.Topka = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
@@ -240,10 +242,28 @@ namespace Ruletka
             this.spinBtn.UseVisualStyleBackColor = false;
             this.spinBtn.Click += new System.EventHandler(this.spinBtn_Click);
             // 
+            // Topka
+            // 
+            this.Topka.Location = new System.Drawing.Point(17, 95);
+            this.Topka.Multiline = true;
+            this.Topka.Name = "Topka";
+            this.Topka.Size = new System.Drawing.Size(300, 484);
+            this.Topka.TabIndex = 22;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(952, 95);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(300, 484);
+            this.textBox2.TabIndex = 23;
+            // 
             // Game
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.Topka);
             this.Controls.Add(this.pictureBox11);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -265,7 +285,6 @@ namespace Ruletka
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Game";
-            this.Load += new System.EventHandler(this.Game_Load);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
@@ -302,5 +321,7 @@ namespace Ruletka
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox pictureBox11;
+        private System.Windows.Forms.TextBox Topka;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }
