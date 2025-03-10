@@ -207,5 +207,21 @@ namespace Ruletka
             return -1;
         }
 
+        public string GetUsername(int userId)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT username FROM users WHERE id = @userId";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                conn.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    return reader["username"].ToString();
+                }
+            }
+            return "";
+        }
     }
 }
