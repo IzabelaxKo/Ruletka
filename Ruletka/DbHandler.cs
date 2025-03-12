@@ -136,7 +136,7 @@ namespace Ruletka
             // Ustawienie tekstu etykiety
             if (label != null)
             {
-                label.Text = "Procent wygranych " + (winRatio * 100).ToString("0.00") + "%";
+                label.Text = "Procent wygranych " + (winRatio * 100).ToString("00.0") + "%";
             }
             else
             {
