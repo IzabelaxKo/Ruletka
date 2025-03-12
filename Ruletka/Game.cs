@@ -18,7 +18,8 @@ namespace Ruletka
         private double bid;
         private int loggedInUser;
         private double balance;
-        private object[,] ostatnioZagrane = new object[8,3]; 
+        private bool isSpinning = false;
+        private object[,] ostatnioZagrane = new object[8, 3];
 
         public Game(int loggedInUser)
         {
@@ -33,7 +34,7 @@ namespace Ruletka
             this.loggedInUser = loggedInUser;
             balance = dbHandler.GetBalance(loggedInUser);
             label1.Text = "Saldo: " + balance.ToString("F2") + " PLN";
-            label4.Text =  dbHandler.GetUsername(loggedInUser);
+            label4.Text = dbHandler.GetUsername(loggedInUser);
             dbHandler.DisplayWinRatio(dbHandler.GetUsername(loggedInUser), winRatio);
         }
 
@@ -50,9 +51,6 @@ namespace Ruletka
             await gameStartAsync();
         }
 
-
-
-        // Asynchroniczna metoda do wykonywania "spinu"
         private void spin()
         {
             Image[] tempImagesFirstRow = new Image[3];
@@ -62,21 +60,17 @@ namespace Ruletka
             PictureBox pictureBox;
             int randomIndex;
 
-            // Kopiowanie obrazów i tagów z pierwszego i drugiego wiersza
             for (int i = 1; i <= 3; i++)
             {
-                // Pierwszy wiersz
                 pictureBox = (PictureBox)this.Controls.Find("pictureBox" + i, true)[0];
                 tempImagesFirstRow[i - 1] = pictureBox.Image;
                 tempTagsFirstRow[i - 1] = pictureBox.Tag?.ToString();
 
-                // Drugi wiersz
                 pictureBox = (PictureBox)this.Controls.Find("pictureBox" + (i + 3), true)[0];
                 tempImagesSecondRow[i - 1] = pictureBox.Image;
                 tempTagsSecondRow[i - 1] = pictureBox.Tag?.ToString();
             }
 
-            // Losowanie nowych obrazów dla pierwszego wiersza
             for (int i = 1; i <= 3; i++)
             {
                 randomIndex = random.Next(0, images.Length);
@@ -101,23 +95,20 @@ namespace Ruletka
                 }
             }
 
-            // Przesunięcie obrazów i tagów:
             for (int i = 4; i <= 6; i++)
             {
-                // - Drugi wiersz otrzymuje stare obrazy i tagi z pierwszego wiersza
                 pictureBox = (PictureBox)this.Controls.Find("pictureBox" + i, true)[0];
                 int tempIndex = i - 4;
                 pictureBox.Image = tempImagesFirstRow[tempIndex];
-                pictureBox.Tag = tempTagsFirstRow[tempIndex]; // Przenieś tag
+                pictureBox.Tag = tempTagsFirstRow[tempIndex];
             }
 
             for (int i = 7; i <= 9; i++)
             {
-                // - Trzeci wiersz otrzymuje stare obrazy i tagi z drugiego wiersza
                 pictureBox = (PictureBox)this.Controls.Find("pictureBox" + i, true)[0];
                 int tempIndex = i - 7;
                 pictureBox.Image = tempImagesSecondRow[tempIndex];
-                pictureBox.Tag = tempTagsSecondRow[tempIndex]; // Przenieś tag
+                pictureBox.Tag = tempTagsSecondRow[tempIndex];
             }
         }
 
@@ -126,7 +117,6 @@ namespace Ruletka
             PictureBox pictureBox;
             string[] imageNames = new string[9];
 
-            // Pobierz nazwy obrazów z PictureBox
             for (int i = 1; i <= 9; i++)
             {
                 pictureBox = (PictureBox)this.Controls.Find("pictureBox" + i, true)[0];
@@ -142,12 +132,10 @@ namespace Ruletka
                 balance += totalWin;
                 dbHandler.UpdateBalance(loggedInUser, totalWin, '+');
                 label1.Text = "Saldo: " + balance.ToString("F2") + " PLN";
-                MessageBox.Show("Wygrałeś: " + totalWin.ToString("F2") + " PLN!");
             }
             else
             {
                 dbHandler.UpdateGames("loses", loggedInUser);
-                //MessageBox.Show("Niestety, tym razem nie wygrałeś.");
             }
             updateLastPlayed(totalWin > 0, totalWin > 0 ? totalWin : -bid);
         }
@@ -205,47 +193,61 @@ namespace Ruletka
 
         private async Task gameStartAsync()
         {
-            bidError.Text = "";
-
-            if (!double.TryParse(textBox1.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out bid))
+            if (isSpinning)
             {
-                bidError.Text = "Nieprawidłowa stawka";
+                MessageBox.Show("Funkcja spin jest już wykonywana. Poczekaj na zakończenie.");
                 return;
             }
 
-            if (bid <= 0)
+            isSpinning = true;
+            spinBtn.Enabled = false;
+
+            try
             {
-                bidError.Text = "Stawka musi być większa niż 0";
-                return;
-            }
+                bidError.Text = "";
 
-            if (bid > balance)
+                if (!double.TryParse(textBox1.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out bid))
+                {
+                    bidError.Text = "Nieprawidłowa stawka";
+                    return;
+                }
+
+                if (bid <= 0)
+                {
+                    bidError.Text = "Stawka musi być większa niż 0";
+                    return;
+                }
+
+                if (bid > balance)
+                {
+                    bidError.Text = "Nie masz wystarczających środków";
+                    return;
+                }
+
+                SoundPlayer simpleSound = new SoundPlayer(Path.Combine("sounds", "tick.wav"));
+                int spins = random.Next(6, 15);
+
+                balance -= bid;
+                dbHandler.UpdateBalance(loggedInUser, bid, '-');
+                label1.Text = "Saldo: " + balance.ToString("F2") + " PLN";
+                setLeaderboard();
+
+                for (int i = 0; i < spins; i++)
+                {
+                    simpleSound.Play();
+                    spin();
+                    await Task.Delay(200);
+                }
+
+                checkWin(bid);
+                setLeaderboard();
+                dbHandler.DisplayWinRatio(dbHandler.GetUsername(loggedInUser), winRatio);
+            }
+            finally
             {
-                bidError.Text = "Nie masz wystarczających środków";
-                return;
+                isSpinning = false;
+                spinBtn.Enabled = true;
             }
-
-            SoundPlayer simpleSound = new SoundPlayer(Path.Combine("sounds", "tick.wav"));
-            int spins = random.Next(6, 15);
-
-            balance -= bid;
-
-            dbHandler.UpdateBalance(loggedInUser, bid, '-');
-            label1.Text = "Saldo: " + balance.ToString("F2") + " PLN";
-            setLeaderboard();
-
-
-            for (int i = 0; i < spins; i++)
-            {
-                simpleSound.Play();
-                spin();
-                await Task.Delay(200);
-            }
-
-            checkWin(bid);
-            setLeaderboard();
-            dbHandler.DisplayWinRatio(dbHandler.GetUsername(loggedInUser), winRatio);
-
         }
 
         private void getLastPlayed()
@@ -256,7 +258,6 @@ namespace Ruletka
                 ostatnioZagrane[i, 1] = false;
                 ostatnioZagrane[i, 2] = 0.0;
 
-                // Ukrycie tekstu po wczytaniu strony
                 Label label = (Label)ostatnioZagrane[i, 0];
                 if (label != null)
                 {
@@ -267,18 +268,15 @@ namespace Ruletka
 
         private void updateLastPlayed(bool win, double amount)
         {
-            // Przesuwanie wyników w dół
             for (int i = 7; i > 0; i--)
             {
-                ostatnioZagrane[i, 1] = ostatnioZagrane[i - 1, 1]; // Kopiowanie win/lose
-                ostatnioZagrane[i, 2] = ostatnioZagrane[i - 1, 2]; // Kopiowanie kwoty
+                ostatnioZagrane[i, 1] = ostatnioZagrane[i - 1, 1];
+                ostatnioZagrane[i, 2] = ostatnioZagrane[i - 1, 2];
             }
 
-            // Dodanie nowego wyniku na początek
             ostatnioZagrane[0, 1] = win;
             ostatnioZagrane[0, 2] = amount;
 
-            // Aktualizacja labeli
             for (int i = 0; i < 8; i++)
             {
                 Label label = (Label)ostatnioZagrane[i, 0];
@@ -289,7 +287,7 @@ namespace Ruletka
 
                     if (value == 0)
                     {
-                        label.Text = ""; // Jeśli puste, to brak tekstu
+                        label.Text = "";
                     }
                     else
                     {
@@ -300,31 +298,32 @@ namespace Ruletka
             }
         }
 
-
-
         private void setLeaderboard()
         {
             DataTable table = dbHandler.BalanceScoreboard();
 
-            topka.Text = "";
-
-            for (int i = 0; i < table.Rows.Count; i++)
+            for (int i = 0; i < 8; i++)
             {
-                DataRow row = table.Rows[i];
+                Label label = (Label)this.Controls.Find("najlepszy" + (i + 1), true).FirstOrDefault();
 
-                // Assuming 'nazwa' is in the first column and 'balans' is in the second column.
-                string name = row[0].ToString();  // Adjust the index if necessary
-                string balance = row[1].ToString();  // Adjust the index if necessary
+                if (label != null)
+                {
+                    if (i < table.Rows.Count)
+                    {
+                        DataRow row = table.Rows[i];
+                        string name = row["nazwa"].ToString();
+                        double balance = Convert.ToDouble(row["balans"]);
 
-                // Format the leaderboard entry
-                string leaderboardEntry = $"{name}, Balans: {balance} zł";
-
-                // Append the entry to the TextBox, add a new line after each entry
-                topka.Text += leaderboardEntry + Environment.NewLine;
+                        label.Text = $"{i + 1}. {name} - {balance.ToString("F2")} zł";
+                    }
+                    else
+                    {
+                        label.Text = "";
+                    }
+                }
             }
         }
 
-        // Ustawienie początkowych obrazów w PictureBox
         private void setImages()
         {
             for (int i = 1; i <= 9; i++)
@@ -344,7 +343,7 @@ namespace Ruletka
                     try
                     {
                         pictureBox.Image = Image.FromFile(imagePath);
-                        pictureBox.Tag = images[randomIndex]; // Przypisz nazwę obrazu do Tag
+                        pictureBox.Tag = images[randomIndex];
                     }
                     catch (Exception ex)
                     {
