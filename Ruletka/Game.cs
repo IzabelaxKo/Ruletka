@@ -13,17 +13,19 @@ namespace Ruletka
     public partial class Game : Form
     {
         private DbHandler dbHandler = new DbHandler();
-        private string[] images = { "bar", "bell", "cherry", "lemon", "orange", "plum", "seven", "diamond" };
+        private string[] images = { "bar", "bell", "cherry", "lemon", "plum", "seven", "diamond" };
         private Random random = new Random();
         private double bid;
         private int loggedInUser;
         private double balance;
+        private object[,] ostatnioZagrane = new object[8,3]; 
 
         public Game(int loggedInUser)
         {
             InitializeComponent();
             setImages();
             setLeaderboard();
+            getLastPlayed();
 
             bidError.Text = "";
 
@@ -32,66 +34,23 @@ namespace Ruletka
             balance = dbHandler.GetBalance(loggedInUser);
             label1.Text = "Saldo: " + balance.ToString("F2") + " PLN";
             label4.Text =  dbHandler.GetUsername(loggedInUser);
-           dbHandler.DisplayWinRatio(dbHandler.GetUsername(loggedInUser), winRatio);
+            dbHandler.DisplayWinRatio(dbHandler.GetUsername(loggedInUser), winRatio);
         }
 
-        private void setLeaderboard()
+        private void logoutBtn_Click(object sender, EventArgs e)
         {
-            DataTable table = dbHandler.BalanceScoreboard();
-
-            topka.Text = "";
-
-            for (int i = 0; i < table.Rows.Count; i++)
-            {
-                DataRow row = table.Rows[i];
-
-                // Assuming 'nazwa' is in the first column and 'balans' is in the second column.
-                string name = row[0].ToString();  // Adjust the index if necessary
-                string balance = row[1].ToString();  // Adjust the index if necessary
-
-                // Format the leaderboard entry
-                string leaderboardEntry = $"{name}, Balans: {balance} zł";
-
-                // Append the entry to the TextBox, add a new line after each entry
-                topka.Text += leaderboardEntry + Environment.NewLine;
-            }
+            Main main = new Main();
+            this.Hide();
+            main.ShowDialog();
+            this.Close();
         }
 
-
-
-        // Ustawienie początkowych obrazów w PictureBox
-        private void setImages()
+        private async void spinBtn_Click(object sender, EventArgs e)
         {
-            for (int i = 1; i <= 9; i++)
-            {
-                PictureBox pictureBox = (PictureBox)this.Controls.Find("pictureBox" + i, true)[0];
-                if (pictureBox == null)
-                {
-                    MessageBox.Show("Nie znaleziono PictureBox: image" + i);
-                    continue;
-                }
-
-                int randomIndex = random.Next(0, images.Length);
-                string imagePath = Path.Combine("imgs", images[randomIndex] + ".png");
-
-                if (File.Exists(imagePath))
-                {
-                    try
-                    {
-                        pictureBox.Image = Image.FromFile(imagePath);
-                        pictureBox.Tag = images[randomIndex]; // Przypisz nazwę obrazu do Tag
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Błąd ładowania obrazu: " + ex.Message);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Obraz nie istnieje: " + imagePath);
-                }
-            }
+            await gameStartAsync();
         }
+
+
 
         // Asynchroniczna metoda do wykonywania "spinu"
         private void spin()
@@ -190,6 +149,7 @@ namespace Ruletka
                 dbHandler.UpdateGames("loses", loggedInUser);
                 //MessageBox.Show("Niestety, tym razem nie wygrałeś.");
             }
+            updateLastPlayed(totalWin > 0, totalWin > 0 ? totalWin : -bid);
         }
 
         private double CalculateTotalWin(string[] imageNames, double bid)
@@ -238,31 +198,8 @@ namespace Ruletka
                 case "bell": return 4.0;
                 case "plum": return 2.0;
                 case "cherry": return 2.0;
-                case "orange": return 1.5;
-                case "lemon": return 1.2;
+                case "lemon": return 1.5;
                 default: return 0.0;
-            }
-        }
-
-        private void PlayWinSound()
-        {
-            string soundPath = Path.Combine("sounds", "win.wav");
-
-            if (File.Exists(soundPath))
-            {
-                try
-                {
-                    SoundPlayer player = new SoundPlayer(soundPath);
-                    player.Play();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Błąd odtwarzania dźwięku: " + ex.Message);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Plik dźwiękowy nie istnieje: " + soundPath);
             }
         }
 
@@ -311,17 +248,136 @@ namespace Ruletka
 
         }
 
-        private void logoutBtn_Click(object sender, EventArgs e)
+        private void getLastPlayed()
         {
-            Main main = new Main();
-            this.Hide();
-            main.ShowDialog();
-            this.Close();
+            for (int i = 0; i < 8; i++)
+            {
+                ostatnioZagrane[i, 0] = this.Controls.Find("ostatnia" + (i + 1), true).FirstOrDefault();
+                ostatnioZagrane[i, 1] = false;
+                ostatnioZagrane[i, 2] = 0.0;
+
+                // Ukrycie tekstu po wczytaniu strony
+                Label label = (Label)ostatnioZagrane[i, 0];
+                if (label != null)
+                {
+                    label.Text = "";
+                }
+            }
         }
 
-        private async void spinBtn_Click(object sender, EventArgs e)
+        private void updateLastPlayed(bool win, double amount)
         {
-            await gameStartAsync();
+            // Przesuwanie wyników w dół
+            for (int i = 7; i > 0; i--)
+            {
+                ostatnioZagrane[i, 1] = ostatnioZagrane[i - 1, 1]; // Kopiowanie win/lose
+                ostatnioZagrane[i, 2] = ostatnioZagrane[i - 1, 2]; // Kopiowanie kwoty
+            }
+
+            // Dodanie nowego wyniku na początek
+            ostatnioZagrane[0, 1] = win;
+            ostatnioZagrane[0, 2] = amount;
+
+            // Aktualizacja labeli
+            for (int i = 0; i < 8; i++)
+            {
+                Label label = (Label)ostatnioZagrane[i, 0];
+
+                if (label != null)
+                {
+                    double value = (double)ostatnioZagrane[i, 2];
+
+                    if (value == 0)
+                    {
+                        label.Text = ""; // Jeśli puste, to brak tekstu
+                    }
+                    else
+                    {
+                        label.Text = (value > 0 ? "+" : "") + value.ToString("F2") + " PLN";
+                        label.ForeColor = (bool)ostatnioZagrane[i, 1] ? Color.Green : Color.Red;
+                    }
+                }
+            }
+        }
+
+
+
+        private void setLeaderboard()
+        {
+            DataTable table = dbHandler.BalanceScoreboard();
+
+            topka.Text = "";
+
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                DataRow row = table.Rows[i];
+
+                // Assuming 'nazwa' is in the first column and 'balans' is in the second column.
+                string name = row[0].ToString();  // Adjust the index if necessary
+                string balance = row[1].ToString();  // Adjust the index if necessary
+
+                // Format the leaderboard entry
+                string leaderboardEntry = $"{name}, Balans: {balance} zł";
+
+                // Append the entry to the TextBox, add a new line after each entry
+                topka.Text += leaderboardEntry + Environment.NewLine;
+            }
+        }
+
+        // Ustawienie początkowych obrazów w PictureBox
+        private void setImages()
+        {
+            for (int i = 1; i <= 9; i++)
+            {
+                PictureBox pictureBox = (PictureBox)this.Controls.Find("pictureBox" + i, true)[0];
+                if (pictureBox == null)
+                {
+                    MessageBox.Show("Nie znaleziono PictureBox: image" + i);
+                    continue;
+                }
+
+                int randomIndex = random.Next(0, images.Length);
+                string imagePath = Path.Combine("imgs", images[randomIndex] + ".png");
+
+                if (File.Exists(imagePath))
+                {
+                    try
+                    {
+                        pictureBox.Image = Image.FromFile(imagePath);
+                        pictureBox.Tag = images[randomIndex]; // Przypisz nazwę obrazu do Tag
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Błąd ładowania obrazu: " + ex.Message);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Obraz nie istnieje: " + imagePath);
+                }
+            }
+        }
+
+        private void PlayWinSound()
+        {
+            string soundPath = Path.Combine("sounds", "win.wav");
+
+            if (File.Exists(soundPath))
+            {
+                try
+                {
+                    SoundPlayer player = new SoundPlayer(soundPath);
+                    player.Play();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Błąd odtwarzania dźwięku: " + ex.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Plik dźwiękowy nie istnieje: " + soundPath);
+            }
         }
 
         private void textBox1_Enter(object sender, EventArgs e)

@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Windows.Forms;
+using Ruletka;
 
 namespace Ruletka
 {
-    internal class DbHandler
+    public class DbHandler
     {
         private string connectionString;
 
@@ -120,7 +121,7 @@ namespace Ruletka
                 }
             }
 
-            label.Text = $"procent wygranych: {winRatio * 100:0.00}%";
+            label.Text = $"Procent wygranych: {winRatio * 100:0.00}%";
         }
 
 

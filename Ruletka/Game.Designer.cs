@@ -48,9 +48,17 @@ namespace Ruletka
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
             this.topka = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.winRatio = new System.Windows.Forms.Label();
+            this.ostatnia1 = new System.Windows.Forms.Label();
+            this.ostatnia2 = new System.Windows.Forms.Label();
+            this.ostatnia3 = new System.Windows.Forms.Label();
+            this.ostatnia4 = new System.Windows.Forms.Label();
+            this.ostatnia7 = new System.Windows.Forms.Label();
+            this.ostatnia6 = new System.Windows.Forms.Label();
+            this.ostatnia5 = new System.Windows.Forms.Label();
+            this.ostatnia8 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.logoutBtn = new RoundedButton();
             this.spinBtn = new RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -231,14 +239,6 @@ namespace Ruletka
             this.topka.Size = new System.Drawing.Size(300, 484);
             this.topka.TabIndex = 22;
             // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(952, 129);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(300, 450);
-            this.textBox2.TabIndex = 23;
-            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
@@ -246,17 +246,107 @@ namespace Ruletka
             // 
             // winRatio
             // 
-            this.winRatio.Location = new System.Drawing.Point(952, 80);
+            this.winRatio.Location = new System.Drawing.Point(952, 47);
             this.winRatio.Name = "winRatio";
             this.winRatio.Size = new System.Drawing.Size(300, 46);
             this.winRatio.TabIndex = 26;
             this.winRatio.Text = "label2";
             this.winRatio.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // ostatnia1
+            // 
+            this.ostatnia1.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ostatnia1.Location = new System.Drawing.Point(952, 195);
+            this.ostatnia1.Name = "ostatnia1";
+            this.ostatnia1.Size = new System.Drawing.Size(300, 40);
+            this.ostatnia1.TabIndex = 27;
+            this.ostatnia1.Text = "label2";
+            this.ostatnia1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ostatnia2
+            // 
+            this.ostatnia2.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ostatnia2.Location = new System.Drawing.Point(952, 235);
+            this.ostatnia2.Name = "ostatnia2";
+            this.ostatnia2.Size = new System.Drawing.Size(300, 40);
+            this.ostatnia2.TabIndex = 28;
+            this.ostatnia2.Text = "label2";
+            this.ostatnia2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ostatnia3
+            // 
+            this.ostatnia3.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ostatnia3.Location = new System.Drawing.Point(952, 275);
+            this.ostatnia3.Name = "ostatnia3";
+            this.ostatnia3.Size = new System.Drawing.Size(300, 40);
+            this.ostatnia3.TabIndex = 29;
+            this.ostatnia3.Text = "label2";
+            this.ostatnia3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ostatnia4
+            // 
+            this.ostatnia4.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ostatnia4.Location = new System.Drawing.Point(952, 310);
+            this.ostatnia4.Name = "ostatnia4";
+            this.ostatnia4.Size = new System.Drawing.Size(300, 40);
+            this.ostatnia4.TabIndex = 30;
+            this.ostatnia4.Text = "label2";
+            this.ostatnia4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ostatnia7
+            // 
+            this.ostatnia7.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ostatnia7.Location = new System.Drawing.Point(952, 430);
+            this.ostatnia7.Name = "ostatnia7";
+            this.ostatnia7.Size = new System.Drawing.Size(300, 40);
+            this.ostatnia7.TabIndex = 33;
+            this.ostatnia7.Text = "label5";
+            this.ostatnia7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ostatnia6
+            // 
+            this.ostatnia6.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ostatnia6.Location = new System.Drawing.Point(952, 390);
+            this.ostatnia6.Name = "ostatnia6";
+            this.ostatnia6.Size = new System.Drawing.Size(300, 40);
+            this.ostatnia6.TabIndex = 32;
+            this.ostatnia6.Text = "label2";
+            this.ostatnia6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ostatnia5
+            // 
+            this.ostatnia5.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ostatnia5.Location = new System.Drawing.Point(952, 350);
+            this.ostatnia5.Name = "ostatnia5";
+            this.ostatnia5.Size = new System.Drawing.Size(300, 40);
+            this.ostatnia5.TabIndex = 31;
+            this.ostatnia5.Text = "label2";
+            this.ostatnia5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ostatnia8
+            // 
+            this.ostatnia8.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ostatnia8.Location = new System.Drawing.Point(952, 470);
+            this.ostatnia8.Name = "ostatnia8";
+            this.ostatnia8.Size = new System.Drawing.Size(300, 40);
+            this.ostatnia8.TabIndex = 34;
+            this.ostatnia8.Text = "label2";
+            this.ostatnia8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(952, 153);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(300, 46);
+            this.label2.TabIndex = 35;
+            this.label2.Text = "Ostatnie gry";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // logoutBtn
             // 
             this.logoutBtn.BackColor = System.Drawing.Color.CornflowerBlue;
             this.logoutBtn.BorderRadius = 20;
+            this.logoutBtn.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.logoutBtn.ForeColor = System.Drawing.Color.White;
             this.logoutBtn.Location = new System.Drawing.Point(1132, 629);
             this.logoutBtn.Name = "logoutBtn";
@@ -284,8 +374,16 @@ namespace Ruletka
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.ostatnia8);
+            this.Controls.Add(this.ostatnia7);
+            this.Controls.Add(this.ostatnia6);
+            this.Controls.Add(this.ostatnia5);
+            this.Controls.Add(this.ostatnia4);
+            this.Controls.Add(this.ostatnia3);
+            this.Controls.Add(this.ostatnia2);
+            this.Controls.Add(this.ostatnia1);
             this.Controls.Add(this.winRatio);
-            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.topka);
             this.Controls.Add(this.pictureBox11);
             this.Controls.Add(this.label4);
@@ -346,8 +444,16 @@ namespace Ruletka
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox pictureBox11;
         private System.Windows.Forms.TextBox topka;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Label winRatio;
+        private System.Windows.Forms.Label ostatnia1;
+        private System.Windows.Forms.Label ostatnia2;
+        private System.Windows.Forms.Label ostatnia3;
+        private System.Windows.Forms.Label ostatnia4;
+        private System.Windows.Forms.Label ostatnia7;
+        private System.Windows.Forms.Label ostatnia6;
+        private System.Windows.Forms.Label ostatnia5;
+        private System.Windows.Forms.Label ostatnia8;
+        private System.Windows.Forms.Label label2;
     }
 }
