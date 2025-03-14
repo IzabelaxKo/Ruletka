@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Windows.Forms;
+using Ruletka;
 
 namespace Ruletka
 {
-    internal class DbHandler
+    public class DbHandler
     {
         private string connectionString;
 
@@ -61,12 +62,12 @@ namespace Ruletka
             return false;
         }
 
-        public void AddUser(string username, string password)
+        public bool AddUser(string username, string password)
         {
             if(CheckIfUserExists(username))
             {
                 MessageBox.Show("Użytkownik o podanej nazwie już istnieje!");
-                return;
+                return false;
             }
             // connecting to the database
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -86,8 +87,64 @@ namespace Ruletka
                 conn.Open();
                 // executing query
                 cmd.ExecuteNonQuery();
+                return true;
             }
         }
+        public void DisplayWinRatio(string username, Label label)
+        {
+            double winRatio = 0;
+            int wins = 0, loses = 0;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+
+                string query = "SELECT wins, loses FROM users WHERE username = @username";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@username", username);
+
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        wins = reader.GetInt32("wins");
+                        loses = reader.GetInt32("loses");
+
+                        // Logowanie wartości
+                        Console.WriteLine($"Wins: {wins}, Loses: {loses}");
+
+                        // Obliczanie winRatio z zabezpieczeniem przed dzieleniem przez zero
+                        if (wins + loses == 0)
+                        {
+                            winRatio = 0.0;
+                        }
+                        else
+                        {
+                            winRatio = (double)wins / (wins + loses);
+                        }
+
+                        // Logowanie winRatio
+                        Console.WriteLine($"WinRatio: {winRatio}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found for the given username.");
+                    }
+                }
+            }
+
+            // Ustawienie tekstu etykiety
+            if (label != null)
+            {
+                label.Text = "Procent wygranych " + (winRatio * 100).ToString("00.0") + "%";
+            }
+            else
+            {
+                Console.WriteLine("Label is null!");
+            }
+        }
+
+
 
         // returns Id of the user 
         public int TryToLoginUser(string username, string password)
@@ -116,7 +173,7 @@ namespace Ruletka
             DataTable dt = new DataTable();
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                string query = "SELECT username, balance FROM users ORDER BY balance DESC";
+                string query = "SELECT username as nazwa, balance as balans FROM users ORDER BY balance DESC LIMIT 8";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);
                 da.Fill(dt);
@@ -137,21 +194,35 @@ namespace Ruletka
             }
             return dt;
         }
-
         public void UpdateGames(string type, int userId)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                string query = "UPDATE users SET " + type + " = " + type + " + 1 WHERE id = @userId";
+                // Sprawdź, czy typ jest poprawny (wins lub loses)
+                if (type != "wins" && type != "loses")
+                {
+                    MessageBox.Show("Nieprawidłowy typ gry: " + type);
+                    return;
+                }
 
+                // Zaktualizuj liczbę wygranych lub przegranych
+                string query = $"UPDATE users SET {type} = {type} + 1 WHERE id = @userId";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
-
                 cmd.Parameters.AddWithValue("@userId", userId);
 
                 conn.Open();
-                cmd.ExecuteNonQuery();
-            }
+                int rowsAffected = cmd.ExecuteNonQuery();
 
+                // Logowanie do debugowania
+                if (rowsAffected > 0)
+                {
+                    Console.WriteLine($"Zaktualizowano {type} dla użytkownika {userId}.");
+                }
+                else
+                {
+                    Console.WriteLine($"Nie udało się zaktualizować {type} dla użytkownika {userId}.");
+                }
+            }
         }
 
         public void UpdateBalance(int userId, double amount, char operation)
